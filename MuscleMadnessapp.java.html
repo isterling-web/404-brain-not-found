@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>MuscleMadnessapp.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #808080; font-style: italic;}
+.s3 { color: #008000; font-weight: bold;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MuscleMadnessapp.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span>java.sql.*;
+<span class="s0">import </span>java.util.Scanner;
+<span class="s0">class </span>Scratch {
+    <span class="s0">public static void </span>main(String[] args) {
+        connection();
+    }
+    <span class="s2">//connection to database</span>
+    <span class="s0">public static void </span>connection() {
+        Connection con;
+        <span class="s0">try </span>{
+            con = DriverManager.getConnection(<span class="s3">&quot;jdbc:postgresql:MUSCLE_MADNESS&quot;</span>);
+        } <span class="s0">catch</span>(Exception e) {
+            System.err.println(<span class="s3">&quot;An Error has occured: &quot;</span>+e);
+            <span class="s0">return</span>;
+        }
+    }
+
+    
+    }
+
+
+}</pre>
+</body>
+</html>
