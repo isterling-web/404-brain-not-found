@@ -1,7 +1,9 @@
+package com.brain404notfound.musclemadness;
+
 import java.sql.*;
 import java.util.Scanner;
 
-class Scratch {
+class MuscleMadnessapp{
     public static void main(String[] args) {
         String UserName="";
         String LastName="";
