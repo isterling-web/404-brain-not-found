@@ -45,10 +45,9 @@ CREATE TABLE NUMBER_OF_EXERCISES(
     ExerciseNum     INTEGER NOT NULL,
     Exercise     	CHAR(100) NOT NULL,
     NumSets		    INTEGER,
-    PRIMARY KEY (UserID, DayID, ExerciseNum), -- Gotta use update statement if circuits/exercise = 0
+    PRIMARY KEY (UserID, DayID, ExerciseNum, CircuitNum), -- Gotta use update statement if circuits/exercise = 0
     FOREIGN KEY (Exercise) REFERENCES EXERCISE_INFO(Exercise),
-	FOREIGN KEY (DayID) REFERENCES DAY_TABLE(DayID)
-	FOREIGN KEY (UserID) REFERENCES ACCOUNT_INFO(UserID)
+	FOREIGN KEY (UserID, DayID) REFERENCES DAY_TABLE(UserID, DayID)
 	);
 
 CREATE TABLE REPS(
@@ -62,10 +61,7 @@ CREATE TABLE REPS(
     Duration		TIME,
     Distance		DECIMAL(8,2),
     PRIMARY KEY (UserID, DayID, CircuitNum, ExerciseNum, SetNum),
-    FOREIGN KEY (DayID) REFERENCES DAY_TABLE(DayID),
-    FOREIGN KEY (ExerciseNum) REFERENCES NUMBER_OF_EXERCISES(ExerciseNum),
-	FOREIGN KEY (UserID) REFERENCES ACCOUNT_INFO(UserID),
-	FOREIGN KEY (CircuitNum) REFERENCES NUMBER_OF_EXERCISES(CircuitNum)
+    FOREIGN KEY (UserID, DayID, ExerciseNum, CircuitNum) REFERENCES NUMBER_OF_EXERCISES(UserID, DayID, ExerciseNum, CircuitNum)
 	);
 	
 	-- Insert data into Exercise Info Table
@@ -133,11 +129,11 @@ INSERT INTO EXERCISE_INFO VALUES(
     
 -- insert data into account info table
 INSERT INTO ACCOUNT_INFO VALUES(
-1001, 'Admin', 'Nik.Got', 'Gottipaty', 'Nikhil', 'NikhilGottipaty@mail.adelphi.edu', 'kIba143', 20, 70, '08/21/2000', null, 'Male', '5163507364', 'Advanced', 1, null);
+1001, 'Admin', 'Nik.Got', 'Gottipaty', 'Nikhil', 'NikhilGottipaty@mail.adelphi.edu', 'kIba143', 20, 70, '08/21/2000', null, 'Male', '5163507364', 'Advanced', null);
 INSERT INTO ACCOUNT_INFO VALUES(
-1002, 'Fitness Instructor', 'REEEE', 'Muller', 'John', 'Fitness.notreal@gmail.com', 'REEEEee', 29, 78.5, '05/12/1991', null, 'Female', '555123542', null, 1, null);
+1002, 'Fitness Instructor', 'REEEE', 'Muller', 'John', 'Fitness.notreal@gmail.com', 'REEEEee', 29, 78.5, '05/12/1991', null, 'Female', '555123542', null, null);
 INSERT INTO ACCOUNT_INFO VALUES(
-1003, 'User', 'understandable', 'Nice', 'Day', 'NiceDay@mail.adelphi.edu', 'gotchu143', 18, 65.8, '04/28/2002', null, 'Male', '516184134', 'Intermediate', 3, null);					
+1003, 'User', 'understandable', 'Nice', 'Day', 'NiceDay@mail.adelphi.edu', 'gotchu143', 18, 65.8, '04/28/2002', null, 'Male', '516184134', 'Intermediate', null);					
 
 -- Insert data into Day Table
 INSERT INTO DAY_TABLE VALUES(
@@ -160,7 +156,7 @@ INSERT INTO DAY_TABLE VALUES(
 
 -- Insert Data into Number of Exercises Table
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 2, 1, 1, 'Bicep Curl', 3);
+1003, 2, 1, 1, 'Biceps curl', 3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
 1003, 2,	2,	1,	'Hammer Curl',	3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
@@ -168,21 +164,21 @@ INSERT INTO NUMBER_OF_EXERCISES VALUES(
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
 1003, 2,	3,	1,	'Shoulder Press',	3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 2,	3,	2,	'Weighted Rows',	3);
+1003, 2,	3,	2,	'Deadlifts',	3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
 1003, 3,	1,	1,	'Bench Press',	3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 3,	1,	2,	'Triceps Extension',	3);
+1003, 3,	1,	2,	'Tricep Extensions',	3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
 1003, 3,	2,	1,	'Incline Press',	3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 3,	2,	2,	'Triceps Dips',	3);
+1003, 3,	2,	2,	'Tricep Dips',	3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
 1003, 4,	1,	1,	'Running',	1);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
 1003, 5,	1,	1,	'Leg Press',	4);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 5,	2,	1,	'Calf Raises',	3);
+1003, 5,	2,	1,	'Calf raises',	3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
 1003, 5,	2,	2,	'Wall Sits',	3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
@@ -192,13 +188,13 @@ INSERT INTO NUMBER_OF_EXERCISES VALUES(
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
 1003, 7,	1,	1,	'Russian Twists',	3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 7,	1,	2,	'Plank',	3);
+1003, 7,	1,	2,	'Planks',	3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 7,	1,	3,	'Six Inches',	3);
+1003, 7,	1,	3,	'Six inches',	3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
 1003, 7,	1,	4,	'Leg Raises',	3);
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 7,	1,	5,	'Crunches',	3);
+1003, 7,	1,	5,	'Sit Ups/Crunches',	3);
 
 -- Insert Data into Reps
 INSERT INTO REPS VALUES(
