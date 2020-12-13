@@ -30,27 +30,34 @@ CREATE TABLE EXERCISE_INFO(
 
 CREATE TABLE DAY_TABLE(
 	UserID			INTEGER NOT NULL,
-    DayID			INTEGER NOT NULL,
     WorkoutDate		DATE NOT NULL,
     DayType			VARCHAR(50),
-    PRIMARY KEY (UserID, DayID),
+    PRIMARY KEY (UserID, WorkoutDate),
 	FOREIGN KEY (UserID) REFERENCES ACCOUNT_INFO(UserID)
     );
 
-CREATE TABLE NUMBER_OF_EXERCISES(
+CREATE TABLE NUMBER_OF_CIRCUITS(
 	UserID			INTEGER NOT NULL,
-	DayID		    INTEGER NOT NULL,
+	WorkoutDate        DATE NOT NULL,
     CircuitNum   	INTEGER NOT NULL,
-    ExerciseNum     INTEGER,
-    Exercise     	CHAR(100),
     PRIMARY KEY (UserID, DayID, CircuitNum), -- Gotta use update statement if circuits/exercise = 0
-    FOREIGN KEY (Exercise) REFERENCES EXERCISE_INFO(Exercise),
 	FOREIGN KEY (UserID, DayID) REFERENCES DAY_TABLE(UserID, DayID)
 	);
 
+CREATE TABLE NUMBER_OF_EXERCISES(
+    UserID          INTEGER NOT NULL,
+    WorkoutDate        DATE NOT NULL,
+    CircuitNum      INTEGER NOT NULL,
+    ExerciseNum     INTEGER NOT NULL,
+    Exercise        CHAR(100),
+    PRIMARY KEY (UserID, DayID, CircuitNum, ExerciseNum), -- Gotta use update statement if circuits/exercise = 0
+    FOREIGN KEY (Exercise) REFERENCES EXERCISE_INFO(Exercise),
+    FOREIGN KEY (UserID, DayID, CircuitNum) REFERENCES DAY_TABLE(UserID, DayID, CircuitNum)
+)
+
 CREATE TABLE REPS(
 	UserID				INTEGER NOT NULL,
-    DayID			INTEGER NOT NULL,
+    WorkoutDate     DATE NOT NULL,
     CircuitNum		INTEGER NOT NULL,
     ExerciseNum		INTEGER NOT NULL,
     SetNum			INTEGER NOT NULL,
@@ -58,8 +65,8 @@ CREATE TABLE REPS(
 	Weight		    DECIMAL(8,2),
     Duration		TIME,
     Distance		DECIMAL(8,2),
-    PRIMARY KEY (UserID, DayID, CircuitNum, ExerciseNum, SetNum),
-    FOREIGN KEY (UserID, DayID, ExerciseNum, CircuitNum) REFERENCES NUMBER_OF_EXERCISES(UserID, DayID, ExerciseNum, CircuitNum)
+    PRIMARY KEY (UserID, WorkoutDate, CircuitNum, ExerciseNum, SetNum),
+    FOREIGN KEY (UserID, WorkoutDate, ExerciseNum, CircuitNum) REFERENCES NUMBER_OF_EXERCISES(UserID, DayID, ExerciseNum, CircuitNum)
 	);
 	
 	-- Insert data into Exercise Info Table
@@ -135,179 +142,193 @@ INSERT INTO ACCOUNT_INFO VALUES(
 
 -- Insert data into Day Table
 INSERT INTO DAY_TABLE VALUES(
-1003, 1,'12/1/2020', null,  null);
+1003, '12/2/2020', 'biceps/back/shoulders');
 INSERT INTO DAY_TABLE VALUES(
-1003, 2, '12/2/2020', 'biceps/back/shoulders');
+1003, '12/3/2020', 'chest/tris');
 INSERT INTO DAY_TABLE VALUES(
-1003, 3, '12/3/2020', 'chest/tris');
+1003, '12/4/2020', 'cardio');
 INSERT INTO DAY_TABLE VALUES(
-1003, 4, '12/4/2020', 'cardio');
+1003, '12/5/2020','legs');
 INSERT INTO DAY_TABLE VALUES(
-1003, 5, '12/5/2020','legs');
-INSERT INTO DAY_TABLE VALUES(
-1003, 6, '12/6/2020', null, null);
-INSERT INTO DAY_TABLE VALUES(
-1003, 7, '12/7/2020', 'abs');
+1003, '12/7/2020', 'abs');
 
-
+--Insert Data into number of circuits table
+INSERT INTO NUMBER_OF_EXERCISES VALUES(
+1003, '12/2/2020', 1);
+INSERT INTO NUMBER_OF_EXERCISES VALUES(
+1003, '12/2/2020', 2);
+INSERT INTO NUMBER_OF_EXERCISES VALUES(
+1003, '12/2/2020', 3);
+INSERT INTO NUMBER_OF_EXERCISES VALUES(
+1003, '12/3/2020', 1);
+INSERT INTO NUMBER_OF_EXERCISES VALUES(
+1003, '12/3/2020', 2);
+INSERT INTO NUMBER_OF_EXERCISES VALUES(
+1003, '12/4/2020', 1);
+INSERT INTO NUMBER_OF_EXERCISES VALUES(
+1003, '12/5/2020', 1);
+INSERT INTO NUMBER_OF_EXERCISES VALUES(
+1003, '12/5/2020', 2);
+INSERT INTO NUMBER_OF_EXERCISES VALUES(
+1003, '12/7/2020', 1);
 
 
 -- Insert Data into Number of Exercises Table
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 2, 1, 1, 'Biceps curl');
+1003, '12/2/2020', 1, 1, 'Biceps curl');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 2,	2,	1,	'Hammer Curl');
+1003, '12/2/2020',	2,	1,	'Hammer Curl');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 2,	2,	2,	'Lat Row');
+1003, '12/2/2020',	2,	2,	'Lat Row');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 2,	3,	1,	'Shoulder Press');
+1003, '12/2/2020',	3,	1,	'Shoulder Press');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 2,	3,	2,	'Deadlifts');
+1003, '12/2/2020',	3,	2,	'Deadlifts');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 3,	1,	1,	'Bench Press');
+1003, '12/3/2020',	1,	1,	'Bench Press');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 3,	1,	2,	'Tricep Extensions');
+1003, '12/3/2020',	1,	2,	'Tricep Extensions');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 3,	2,	1,	'Incline Press');
+1003, '12/3/2020',	2,	1,	'Incline Press');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 3,	2,	2,	'Tricep Dips');
+1003, '12/3/2020',	2,	2,	'Tricep Dips');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 4,	1,	1,	'Running');
+1003, '12/4/2020',	1,	1,	'Running');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 5,	1,	1,	'Leg Press');
+1003, '12/5/2020',	1,	1,	'Leg Press');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 5,	2,	1,	'Calf raises');
+1003, '12/5/2020',	2,	1,	'Calf raises');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 5,	2,	2,	'Wall Sits');
+1003, '12/5/2020',	2,	2,	'Wall Sits');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 5,	3,	1,	'Seated Calf Raises');
+1003, '12/5/2020',	3,	1,	'Seated Calf Raises');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 5,	3,	2,	'Lunges');
+1003, '12/5/2020',	3,	2,	'Lunges');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 7,	1,	1,	'Russian Twists');
+1003, '12/7/2020',	1,	1,	'Russian Twists');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 7,	1,	2,	'Planks');
+1003, '12/7/2020',	1,	2,	'Planks');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 7,	1,	3,	'Six inches');
+1003, '12/7/2020',	1,	3,	'Six inches');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 7,	1,	4,	'Leg Raises');
+1003, '12/7/2020',	1,	4,	'Leg Raises');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 7,	1,	5,	'Sit Ups/Crunches');
+1003, '12/7/2020',	1,	5,	'Sit Ups/Crunches');
 
 -- Insert Data into Reps
 INSERT INTO REPS VALUES(
-1003, 2, 1, 1, 1, 20, 60, null, null);
+1003, '12/2/2020', 1, 1, 1, 20, 60, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 1, 1, 2, 20, 60, null, null);
+1003, '12/2/2020', 1, 1, 2, 20, 60, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 1, 1, 3, 18, 60, null, null);
+1003, '12/2/2020', 1, 1, 3, 18, 60, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 2, 1, 1, 20, 50, null, null);
+1003, '12/2/2020', 2, 1, 1, 20, 50, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 2, 1, 2, 20, 50, null, null);
+1003, '12/2/2020', 2, 1, 2, 20, 50, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 2, 1, 3, 20, 50, null, null);
+1003, '12/2/2020', 2, 1, 3, 20, 50, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 2, 2, 1, 16, 60, null, null);
+1003, '12/2/2020', 2, 2, 1, 16, 60, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 2, 2, 2, 16, 60, null, null);
+1003, '12/2/2020', 2, 2, 2, 16, 60, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 2, 2, 3, 14, 60, null, null);
+1003, '12/2/2020', 2, 2, 3, 14, 60, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 3, 1, 1, 10, 80, null, null);
+1003, '12/2/2020', 3, 1, 1, 10, 80, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 3, 1, 2, 8, 80, null, null);
+1003, '12/2/2020', 3, 1, 2, 8, 80, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 3, 1, 3, 8, 80, null, null);
+1003, '12/2/2020', 3, 1, 3, 8, 80, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 3, 2, 1, 12, 100, null, null);
+1003, '12/2/2020', 3, 2, 1, 12, 100, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 3, 2, 2, 11, 100, null, null);
+1003, '12/2/2020', 3, 2, 2, 11, 100, null, null);
 INSERT INTO REPS VALUES(
-1003, 2, 3, 2, 3, 9, 100, null, null);
+1003, '12/2/2020', 3, 2, 3, 9, 100, null, null);
 INSERT INTO REPS VALUES(
-1003, 3, 1, 1, 1, 10, 190, null, null);
+1003, '12/3/2020', 1, 1, 1, 10, 190, null, null);
 INSERT INTO REPS VALUES(
-1003, 3, 1, 1, 2, 8, 190, null, null);
+1003, '12/3/2020', 1, 1, 2, 8, 190, null, null);
 INSERT INTO REPS VALUES(
-1003, 3, 1, 1, 3, 6, 190, null, null);
+1003, '12/3/2020', 1, 1, 3, 6, 190, null, null);
 INSERT INTO REPS VALUES(
-1003, 3, 1, 2, 1, 15, 40, null, null);
+1003, '12/3/2020', 1, 2, 1, 15, 40, null, null);
 INSERT INTO REPS VALUES(
-1003, 3, 1, 2, 2, 15, 40, null, null);
+1003, '12/3/2020', 1, 2, 2, 15, 40, null, null);
 INSERT INTO REPS VALUES(
-1003, 3, 1, 2, 3, 12, 40, null, null);
+1003, '12/3/2020', 1, 2, 3, 12, 40, null, null);
 INSERT INTO REPS VALUES(
-1003, 3, 2, 1, 1, 8, 90, null, null);
+1003, '12/3/2020', 2, 1, 1, 8, 90, null, null);
 INSERT INTO REPS VALUES(
-1003, 3, 2, 1, 2, 8, 90, null, null);
+1003, '12/3/2020', 2, 1, 2, 8, 90, null, null);
 INSERT INTO REPS VALUES(
-1003, 3, 2, 1, 3, 8, 90, null, null);
+1003, '12/3/2020', 2, 1, 3, 8, 90, null, null);
 INSERT INTO REPS VALUES(
-1003, 3, 2, 2, 1, 20, null, null, null);
+1003, '12/3/2020', 2, 2, 1, 20, null, null, null);
 INSERT INTO REPS VALUES(
-1003, 3, 2, 2, 2, 22, null, null, null);
+1003, '12/3/2020', 2, 2, 2, 22, null, null, null);
 INSERT INTO REPS VALUES(
-1003, 3, 2, 2, 3, 20, null, null, null);
+1003, '12/3/2020', 2, 2, 3, 20, null, null, null);
 INSERT INTO REPS VALUES(
-1003, 4, 1, 1, 1, null, null, '0:16:00', 2);
+1003, '12/4/2020', 1, 1, 1, null, null, '0:16:00', 2);
 INSERT INTO REPS VALUES(
-1003, 5, 1, 1, 1, 12, 300, null, null);
+1003, '12/5/2020', 1, 1, 1, 12, 300, null, null);
 INSERT INTO REPS VALUES(
-1003, 5, 1, 1, 2, 10, 300, null, null);
+1003, '12/5/2020', 1, 1, 2, 10, 300, null, null);
 INSERT INTO REPS VALUES(
-1003, 5, 1, 1, 3, 8, 300, null, null);
+1003, '12/5/2020', 1, 1, 3, 8, 300, null, null);
 INSERT INTO REPS VALUES(
-1003, 5, 2, 1, 1, 30, 90, null, null);
+1003, '12/5/2020', 2, 1, 1, 30, 90, null, null);
 INSERT INTO REPS VALUES(
-1003, 5, 2, 1, 2, 30, 90, null, null);
+1003, '12/5/2020', 2, 1, 2, 30, 90, null, null);
 INSERT INTO REPS VALUES(
-1003, 5, 2, 1, 3, 30, 90, null, null);
+1003, '12/5/2020', 2, 1, 3, 30, 90, null, null);
 INSERT INTO REPS VALUES(
-1003, 5, 2, 2, 1, null, null, '0:01:00', null);
+1003, '12/5/2020', 2, 2, 1, null, null, '0:01:00', null);
 INSERT INTO REPS VALUES(
-1003, 5, 2, 2, 2, null, null, '0:01:00', null);
+1003, '12/5/2020', 2, 2, 2, null, null, '0:01:00', null);
 INSERT INTO REPS VALUES(
-1003, 5, 2, 2, 3, null, null, '0:01:00', null);
+1003, '12/5/2020', 2, 2, 3, null, null, '0:01:00', null);
 INSERT INTO REPS VALUES(
-1003, 5, 3, 1, 1, 30, 100, null, null);
+1003, '12/5/2020', 3, 1, 1, 30, 100, null, null);
 INSERT INTO REPS VALUES(
-1003, 5, 3, 1, 2, 25, 100, null, null);
+1003, '12/5/2020', 3, 1, 2, 25, 100, null, null);
 INSERT INTO REPS VALUES(
-1003, 5, 3, 1, 3, 25, 100, null, null);
+1003, '12/5/2020', 3, 1, 3, 25, 100, null, null);
 INSERT INTO REPS VALUES(
-1003, 5, 3, 2, 1, 12, 40, null, null);
+1003, '12/5/2020', 3, 2, 1, 12, 40, null, null);
 INSERT INTO REPS VALUES(
-1003, 5, 3, 2, 2, 12, 40, null, null);
+1003, '12/5/2020', 3, 2, 2, 12, 40, null, null);
 INSERT INTO REPS VALUES(
-1003, 5, 3, 2, 3, 12, 40, null, null);
+1003, '12/5/2020', 3, 2, 3, 12, 40, null, null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 1, 1, 50, null, null, null);
+1003, '12/7/2020', 1, 1, 1, 50, null, null, null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 1, 2, 50, null, null, null);
+1003, '12/7/2020', 1, 1, 2, 50, null, null, null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 1, 3, 50, null, null, null);
+1003, '12/7/2020', 1, 1, 3, 50, null, null, null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 2, 1, null, null, '0:01:00', null);
+1003, '12/7/2020', 1, 2, 1, null, null, '0:01:00', null);
 INSERT INTO REPS VALUES(
- 1003, 7, 1, 2, 2, null, null, '0:01:00', null);
+ 1003, '12/7/2020', 1, 2, 2, null, null, '0:01:00', null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 2, 3, null, null, '0:01:00', null);
+1003, '12/7/2020', 1, 2, 3, null, null, '0:01:00', null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 3, 1, null, null, '0:01:00', null);
+1003, '12/7/2020', 1, 3, 1, null, null, '0:01:00', null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 3, 2, null, null, '0:01:00', null);
+1003, '12/7/2020', 1, 3, 2, null, null, '0:01:00', null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 3, 3, null, null, '0:01:00', null);
+1003, '12/7/2020', 1, 3, 3, null, null, '0:01:00', null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 4, 1, 15, null, null, null);
+1003, '12/7/2020', 1, 4, 1, 15, null, null, null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 4, 2, 15, null, null, null);
+1003, '12/7/2020', 1, 4, 2, 15, null, null, null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 4, 3, 15, null, null, null);
+1003, '12/7/2020', 1, 4, 3, 15, null, null, null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 5, 1, 25, null, null, null);
+1003, '12/7/2020', 1, 5, 1, 25, null, null, null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 5, 2, 25, null, null, null);
+1003, '12/7/2020', 1, 5, 2, 25, null, null, null);
 INSERT INTO REPS VALUES(
-1003, 7, 1, 5, 3, 25, null, null, null);
+1003, '12/7/2020', 1, 5, 3, 25, null, null, null);
