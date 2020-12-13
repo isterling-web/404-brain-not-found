@@ -32,19 +32,17 @@ CREATE TABLE DAY_TABLE(
 	UserID			INTEGER NOT NULL,
     DayID			INTEGER NOT NULL,
     WorkoutDate		DATE NOT NULL,
-    NumCircuits		INTEGER,
     DayType			VARCHAR(50),
     PRIMARY KEY (UserID, DayID),
 	FOREIGN KEY (UserID) REFERENCES ACCOUNT_INFO(UserID)
     );
 
 CREATE TABLE NUMBER_OF_EXERCISES(
-	UserID				INTEGER NOT NULL,
+	UserID			INTEGER NOT NULL,
 	DayID		    INTEGER NOT NULL,
     CircuitNum   	INTEGER NOT NULL,
     ExerciseNum     INTEGER NOT NULL,
-    Exercise     	CHAR(100) NOT NULL,
-    NumSets		    INTEGER,
+    Exercise     	CHAR(100),
     PRIMARY KEY (UserID, DayID, ExerciseNum, CircuitNum), -- Gotta use update statement if circuits/exercise = 0
     FOREIGN KEY (Exercise) REFERENCES EXERCISE_INFO(Exercise),
 	FOREIGN KEY (UserID, DayID) REFERENCES DAY_TABLE(UserID, DayID)
@@ -139,62 +137,62 @@ INSERT INTO ACCOUNT_INFO VALUES(
 INSERT INTO DAY_TABLE VALUES(
 1003, 1,'12/1/2020', null,  null);
 INSERT INTO DAY_TABLE VALUES(
-1003, 2, '12/2/2020', 3, 'biceps/back/shoulders');
+1003, 2, '12/2/2020', 'biceps/back/shoulders');
 INSERT INTO DAY_TABLE VALUES(
-1003, 3, '12/3/2020', 2, 'chest/tris');
+1003, 3, '12/3/2020', 'chest/tris');
 INSERT INTO DAY_TABLE VALUES(
-1003, 4, '12/4/2020', 1, 'cardio');
+1003, 4, '12/4/2020', 'cardio');
 INSERT INTO DAY_TABLE VALUES(
-1003, 5, '12/5/2020', 3, 'legs');
+1003, 5, '12/5/2020','legs');
 INSERT INTO DAY_TABLE VALUES(
 1003, 6, '12/6/2020', null, null);
 INSERT INTO DAY_TABLE VALUES(
-1003, 7, '12/7/2020', 1, 'abs');
+1003, 7, '12/7/2020', 'abs');
 
 
 
 
 -- Insert Data into Number of Exercises Table
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 2, 1, 1, 'Biceps curl', 3);
+1003, 2, 1, 1, 'Biceps curl');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 2,	2,	1,	'Hammer Curl',	3);
+1003, 2,	2,	1,	'Hammer Curl');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 2,	2,	2,	'Lat Row',	3);
+1003, 2,	2,	2,	'Lat Row');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 2,	3,	1,	'Shoulder Press',	3);
+1003, 2,	3,	1,	'Shoulder Press');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 2,	3,	2,	'Deadlifts',	3);
+1003, 2,	3,	2,	'Deadlifts');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 3,	1,	1,	'Bench Press',	3);
+1003, 3,	1,	1,	'Bench Press');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 3,	1,	2,	'Tricep Extensions',	3);
+1003, 3,	1,	2,	'Tricep Extensions');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 3,	2,	1,	'Incline Press',	3);
+1003, 3,	2,	1,	'Incline Press');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 3,	2,	2,	'Tricep Dips',	3);
+1003, 3,	2,	2,	'Tricep Dips');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 4,	1,	1,	'Running',	1);
+1003, 4,	1,	1,	'Running');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 5,	1,	1,	'Leg Press',	4);
+1003, 5,	1,	1,	'Leg Press');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 5,	2,	1,	'Calf raises',	3);
+1003, 5,	2,	1,	'Calf raises');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 5,	2,	2,	'Wall Sits',	3);
+1003, 5,	2,	2,	'Wall Sits');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 5,	3,	1,	'Seated Calf Raises',	3);
+1003, 5,	3,	1,	'Seated Calf Raises');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 5,	3,	2,	'Lunges',	3);
+1003, 5,	3,	2,	'Lunges');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 7,	1,	1,	'Russian Twists',	3);
+1003, 7,	1,	1,	'Russian Twists');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 7,	1,	2,	'Planks',	3);
+1003, 7,	1,	2,	'Planks');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 7,	1,	3,	'Six inches',	3);
+1003, 7,	1,	3,	'Six inches');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 7,	1,	4,	'Leg Raises',	3);
+1003, 7,	1,	4,	'Leg Raises');
 INSERT INTO NUMBER_OF_EXERCISES VALUES(
-1003, 7,	1,	5,	'Sit Ups/Crunches',	3);
+1003, 7,	1,	5,	'Sit Ups/Crunches');
 
 -- Insert Data into Reps
 INSERT INTO REPS VALUES(
