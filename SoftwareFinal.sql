@@ -41,9 +41,9 @@ CREATE TABLE NUMBER_OF_EXERCISES(
 	UserID			INTEGER NOT NULL,
 	DayID		    INTEGER NOT NULL,
     CircuitNum   	INTEGER NOT NULL,
-    ExerciseNum     INTEGER NOT NULL,
+    ExerciseNum     INTEGER,
     Exercise     	CHAR(100),
-    PRIMARY KEY (UserID, DayID, ExerciseNum, CircuitNum), -- Gotta use update statement if circuits/exercise = 0
+    PRIMARY KEY (UserID, DayID, CircuitNum), -- Gotta use update statement if circuits/exercise = 0
     FOREIGN KEY (Exercise) REFERENCES EXERCISE_INFO(Exercise),
 	FOREIGN KEY (UserID, DayID) REFERENCES DAY_TABLE(UserID, DayID)
 	);
