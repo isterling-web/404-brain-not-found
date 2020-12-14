@@ -52,7 +52,7 @@ CREATE TABLE NUMBER_OF_EXERCISES(
     Exercise        CHAR(100),
     PRIMARY KEY (UserID, WorkoutDate, CircuitNum, ExerciseNum), -- Gotta use update statement if circuits/exercise = 0
     FOREIGN KEY (Exercise) REFERENCES EXERCISE_INFO(Exercise),
-    FOREIGN KEY (UserID, WorkoutDate, CircuitNum) REFERENCES DAY_TABLE(UserID, WorkoutDate, CircuitNum)
+    FOREIGN KEY (UserID, WorkoutDate, CircuitNum) REFERENCES NUMBER_OF_CIRCUITS(UserID, WorkoutDate, CircuitNum)
 );
 
 CREATE TABLE REPS(
@@ -152,7 +152,7 @@ INSERT INTO DAY_TABLE VALUES(
 INSERT INTO DAY_TABLE VALUES(
 1003, '12/7/2020', 'abs');
 
---Insert Data into number of circuits table
+-- Insert Data into number of circuits table
 INSERT INTO NUMBER_OF_CIRCUITS VALUES(
 1003, '12/2/2020', 1);
 INSERT INTO NUMBER_OF_CIRCUITS VALUES(
