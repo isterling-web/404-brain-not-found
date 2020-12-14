@@ -30,7 +30,7 @@ CREATE TABLE EXERCISE_INFO(
 
 CREATE TABLE DAY_TABLE(
 	UserID			INTEGER NOT NULL,
-    WorkoutDate		DATE NOT NULL,
+    WorkoutDate		VARCHAR(50) NOT NULL,
     DayType			VARCHAR(50),
     PRIMARY KEY (UserID, WorkoutDate),
 	FOREIGN KEY (UserID) REFERENCES ACCOUNT_INFO(UserID)
@@ -38,26 +38,26 @@ CREATE TABLE DAY_TABLE(
 
 CREATE TABLE NUMBER_OF_CIRCUITS(
 	UserID			INTEGER NOT NULL,
-	WorkoutDate        DATE NOT NULL,
+	WorkoutDate        VARCHAR(50) NOT NULL,
     CircuitNum   	INTEGER NOT NULL,
-    PRIMARY KEY (UserID, DayID, CircuitNum), -- Gotta use update statement if circuits/exercise = 0
-	FOREIGN KEY (UserID, DayID) REFERENCES DAY_TABLE(UserID, DayID)
+    PRIMARY KEY (UserID, WorkoutDate, CircuitNum), -- Gotta use update statement if circuits/exercise = 0
+	FOREIGN KEY (UserID, WorkoutDate) REFERENCES DAY_TABLE(UserID, WorkoutDate)
 	);
 
 CREATE TABLE NUMBER_OF_EXERCISES(
     UserID          INTEGER NOT NULL,
-    WorkoutDate        DATE NOT NULL,
+    WorkoutDate        VARCHAR(50) NOT NULL,
     CircuitNum      INTEGER NOT NULL,
     ExerciseNum     INTEGER NOT NULL,
     Exercise        CHAR(100),
-    PRIMARY KEY (UserID, DayID, CircuitNum, ExerciseNum), -- Gotta use update statement if circuits/exercise = 0
+    PRIMARY KEY (UserID, WorkoutDate, CircuitNum, ExerciseNum), -- Gotta use update statement if circuits/exercise = 0
     FOREIGN KEY (Exercise) REFERENCES EXERCISE_INFO(Exercise),
-    FOREIGN KEY (UserID, DayID, CircuitNum) REFERENCES DAY_TABLE(UserID, DayID, CircuitNum)
+    FOREIGN KEY (UserID, WorkoutDate, CircuitNum) REFERENCES DAY_TABLE(UserID, WorkoutDate, CircuitNum)
 )
 
 CREATE TABLE REPS(
 	UserID				INTEGER NOT NULL,
-    WorkoutDate     DATE NOT NULL,
+    WorkoutDate     VARCHAR(50) NOT NULL,
     CircuitNum		INTEGER NOT NULL,
     ExerciseNum		INTEGER NOT NULL,
     SetNum			INTEGER NOT NULL,
