@@ -52,7 +52,8 @@ CREATE TABLE NUMBER_OF_EXERCISES(
     Exercise        CHAR(100),
     PRIMARY KEY (UserID, WorkoutDate, CircuitNum, ExerciseNum), -- Gotta use update statement if circuits/exercise = 0
     FOREIGN KEY (Exercise) REFERENCES EXERCISE_INFO(Exercise),
-    FOREIGN KEY (UserID, WorkoutDate, CircuitNum) REFERENCES DAY_TABLE(UserID, WorkoutDate, CircuitNum)
+    FOREIGN KEY (UserID, WorkoutDate) REFERENCES DAY_TABLE(UserID, WorkoutDate),
+    FOREIGN KEY (CircuitNum) REFERENCES NUMBER_OF_CIRCUITS(CircuitNum)
 )
 
 CREATE TABLE REPS(
@@ -66,7 +67,9 @@ CREATE TABLE REPS(
     Duration		TIME,
     Distance		DECIMAL(8,2),
     PRIMARY KEY (UserID, WorkoutDate, CircuitNum, ExerciseNum, SetNum),
-    FOREIGN KEY (UserID, WorkoutDate, ExerciseNum, CircuitNum) REFERENCES NUMBER_OF_EXERCISES(UserID, WorkoutDate, ExerciseNum, CircuitNum)
+    FOREIGN KEY (UserID, WorkoutDate) REFERENCES DAY_TABLE(UserID, WorkoutDate),
+    FOREIGN KEY (CircuitNum) REFERENCES NUMBER_OF_CIRCUITS(CircuitNum),
+    FOREIGN KEY (ExerciseNum) REFERENCES NUMBER_OF_EXERCISES(ExerciseNum)
 	);
 	
 	-- Insert data into Exercise Info Table
